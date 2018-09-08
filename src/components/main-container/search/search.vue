@@ -1,0 +1,74 @@
+<template>
+<div id='search'>
+    <div class="searchBox">
+      <input type='text' v-model.trim.lazy="queryString" placeholder="search" v-on:keyup.enter='search' class="search">
+    </div>
+      <ul v-show='songItems!==[]' class="songList">
+        <li v-for="songItem in songItems" v-bind:key="songItem.MUSICRID" class="song-container">
+          <song-item v-bind:songInfo="songItem" class="show-icon-music show-icon-favorite">
+          </song-item>
+        </li>
+    </ul>
+</div>
+</template>
+<script>
+import songItem from "../../common/songItem/songItem.vue";
+import resp from "./resp.js";
+import store from "../../../store/index.js";
+
+export default {
+  data: function() {
+    return {
+      queryString: "",
+      songItems: []
+    };
+  },
+  methods: {
+    search: function() {
+      this.songItems = resp.abslist;
+      // store.commit('addFavorite');
+    }
+  },
+  components: {
+    songItem
+  }
+};
+</script>
+<style>
+.searchBox {
+  background-color: #f4f4f4;
+}
+.search {
+  display: inline-block;
+  border-radius: 8px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
+  margin: 8px 12px;
+  padding-left: 6px;
+  border: none;
+}
+.search:focus {
+  outline: none;
+}
+.songList {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.song-container {
+  position: relative;
+  text-align: left;
+}
+.song-container li::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #e5e5e5;
+}
+</style>
