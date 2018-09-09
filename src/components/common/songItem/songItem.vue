@@ -6,7 +6,7 @@
           <p class='artist' v-html="songInfo.ARTIST"></p>
         </div>
         <i class="icon-favorite" v-on:click='toggleFavor' v-bind:class="{'favorite':isFavorite}"></i>
-        <i class="icon-del"></i>
+        <i class="icon-del" v-on:click='del'></i>
         <i class="icon-join"></i>
     </div>
 </template>
@@ -24,6 +24,9 @@ export default {
     toggleFavor: function () {
       this.isFavorite=!this.isFavorite;  
       this.isFavorite===true?store.dispatch('addFavorite',this.songInfo):store.dispatch('removeFavorite',this.songInfo);
+    },
+    del :function () {
+      store.dispatch('removeFavorite',this.songInfo);
     }
   }
 };
