@@ -5,6 +5,7 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import Vuex from 'vuex';
+
 require('./assets/icon.css');
 
 Vue.config.productionTip = false;
@@ -18,4 +19,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 });
-router.push('/list');
