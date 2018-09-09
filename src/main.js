@@ -5,13 +5,15 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import Vuex from 'vuex';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 require('./assets/icon.css');
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuex);
-
+Vue.use(VueAxios, axios);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

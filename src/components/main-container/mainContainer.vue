@@ -39,7 +39,7 @@ export default {
 <style>
 .main-container {
   height: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 .nav{
   display: flex;

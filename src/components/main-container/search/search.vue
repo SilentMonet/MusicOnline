@@ -25,8 +25,13 @@ export default {
   },
   methods: {
     search: function() {
-      this.songItems = resp.abslist;
-      // store.commit('addFavorite');
+      this.songItems=resp.abslist;
+      this.axios.get(`/api/search/?queryString=${this.queryString}&page=1&count=15`)
+                .then((response) => {
+                  this.songItems=response.data.abslist;
+                }).catch((response) => {
+                  console.log(response);
+                });
     }
   },
   components: {

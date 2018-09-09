@@ -1,8 +1,8 @@
 <template>
     <div class="songItemContainer" v-if="songInfo!==null">
       <i class="icon-music"></i>
-        <div class="song">
-          <h6 class='songName' v-html="songInfo.NAME"></h6>
+        <div class="song" v-on:click="playThis">
+          <h6 class='songName' v-html="songInfo.SONGNAME"></h6>
           <p class='artist' v-html="songInfo.ARTIST"></p>
         </div>
         <i class="icon-favorite" v-on:click='toggleFavor' v-bind:class="{'favorite':isFavorite}"></i>
@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import store from '../../../store/store.js';
+import store from '../../../store/store';
 
 export default {
   data:function () {
@@ -27,6 +27,9 @@ export default {
     },
     del :function () {
       store.dispatch('removeFavorite',this.songInfo);
+    },
+    playThis: function () {
+      store.commit('playNext',this.songInfo);
     }
   }
 };

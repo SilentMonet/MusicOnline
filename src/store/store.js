@@ -7,22 +7,34 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    // {url:"http://other.web.nf01.sycdn.kuwo.cn/resource/n3/19/83/246973631.mp3"},
+    currentIndex: 0,
+    currentList: [],
     favorites: []
   },
-  getters: {},
+  getters: {
+    currentPlay: state => {
+      console.log('execute getter');
+      return state.currentList[state.currentIndex] || {};
+    }
+  },
   mutations: {
     addFavorite(state, songInfo) {
       if (state.favorites.every(
-          (current) => current.MUSICRID !== songInfo.MUSICRID
+          (song) => song.MUSICRID !== songInfo.MUSICRID
         )) {
         state.favorites.push(songInfo);
       }
     },
     removeFavorite(state, songInfo) {
-      let index = state.favorites.findIndex((current) => current.MUSICRID === songInfo.MUSICRID);
+      let index = state.favorites.findIndex((song) => song.MUSICRID === songInfo.MUSICRID);
       if (index !== -1) {
         state.favorites.splice(index, 1);
       }
+    },
+    playNext(state,songInfo) {
+      
+      songInfo?state.currentList.splice(state.currentIndex,0,songInfo):(++state.currentIndex);
     }
   },
   actions: {

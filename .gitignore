@@ -12,3 +12,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+__pycache__/musicOnline.cpython-35.pyc
+musicOnline.py

@@ -117,7 +117,8 @@ export default{
     'fpay': '0',
     'tpay': '0',
     'opay': '0',
-    'react_type': '1'
+    'react_type': '1',
+    'url':'http://other.web.nf01.sycdn.kuwo.cn/resource/n3/19/83/246973631.mp3'
   }, {
     'ONLINE': '1',
     'NAME': '青花瓷&nbsp;(Live)',
@@ -225,8 +226,10 @@ export default{
     'fpay': '0',
     'tpay': '0',
     'opay': '0',
-    'react_type': '1'
+    'react_type': '1',
+    'url':'http://other.web.nf01.sycdn.kuwo.cn/resource/n3/19/83/246973631.mp3'
   }, {
+    'url':'http://other.web.nf01.sycdn.kuwo.cn/resource/n3/19/83/246973631.mp3',
     'ONLINE': '1',
     'NAME': '淘汰',
     'PATH': 'm3/17/55/1156197787.wma',
