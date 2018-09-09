@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import store from '../../../store/index.js';
+import store from '../../../store/store.js';
 
 export default {
   data:function () {
@@ -23,7 +23,7 @@ export default {
   methods:{
     toggleFavor: function () {
       this.isFavorite=!this.isFavorite;  
-      this.isFavorite===true?store.commit('addFavorite',this.songInfo):store.commit('removeFavorite',this.songInfo);
+      this.isFavorite===true?store.dispatch('addFavorite',this.songInfo):store.dispatch('removeFavorite',this.songInfo);
     }
   }
 };

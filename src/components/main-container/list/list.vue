@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import store from '../../../store/index';
+import store from '../../../store/store.js';
 import songItem from '../../common/songItem/songItem';
 
 export default {
@@ -13,9 +13,11 @@ export default {
     },
     computed:{
         favorites:function () {
-            console.log(store.state.favorites);
             return store.state.favorites;
         }
+    },
+    mounted(){
+        store.dispatch('updateFavorites');
     }
 }
 </script>

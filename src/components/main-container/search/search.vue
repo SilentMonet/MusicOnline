@@ -14,7 +14,7 @@
 <script>
 import songItem from "../../common/songItem/songItem.vue";
 import resp from "./resp.js";
-import store from "../../../store/index.js";
+import store from "../../../store/store.js";
 
 export default {
   data: function() {
