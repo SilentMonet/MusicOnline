@@ -23,13 +23,13 @@ export default {
   methods:{
     toggleFavor: function () {
       this.isFavorite=!this.isFavorite;  
-      this.isFavorite===true?store.dispatch('addFavorite',this.songInfo):store.dispatch('removeFavorite',this.songInfo);
+      this.isFavorite===true?store.dispatch('add',{'songInfo':this.songInfo,'targetList':'favorites'}):store.dispatch('remove',{'songInfo':this.songInfo,'targetList':'favorites'});
     },
     del :function () {
-      store.dispatch('removeFavorite',this.songInfo);
+      store.dispatch('remove',{'songInfo':this.songInfo,'targetList':'favorites'});
     },
     playThis: function () {
-      store.commit('playNext',this.songInfo);
+      store.commit('playThis',this.songInfo);
     }
   }
 };
@@ -56,6 +56,7 @@ export default {
   min-height: 50px;
   padding-left: 46px;
   padding-bottom: 4px;
+  cursor: pointer;
 }
 .songName {
   margin: 10px 0 2px;
