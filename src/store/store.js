@@ -1,4 +1,6 @@
 /*jshint esversion :6*/
+//向state.currentList添加歌曲时必须检查url是否有效
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 import db from './localDB';
@@ -7,34 +9,36 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // {url:"http://other.web.nf01.sycdn.kuwo.cn/resource/n3/19/83/246973631.mp3"},
     currentIndex: 0,
     currentList: [],
     favorites: []
   },
   getters: {
     currentPlay: state => {
-      console.log('execute getter');
       return state.currentList[state.currentIndex] || {};
     }
   },
   mutations: {
-    addFavorite(state, songInfo) {
-      if (state.favorites.every(
+    add(state, {songInfo,targetList}) {
+      if (state[targetList].every(
           (song) => song.MUSICRID !== songInfo.MUSICRID
         )) {
-        state.favorites.push(songInfo);
+        state[targetList].push(songInfo);
       }
     },
-    removeFavorite(state, songInfo) {
-      let index = state.favorites.findIndex((song) => song.MUSICRID === songInfo.MUSICRID);
+    remove(state, {songInfo,targetList}) {
+      let index = state[targetList].findIndex((song) => song.MUSICRID === songInfo.MUSICRID);
       if (index !== -1) {
-        state.favorites.splice(index, 1);
+        state[targetList].splice(index, 1);
       }
     },
-    playNext(state,songInfo) {
-      
-      songInfo?state.currentList.splice(state.currentIndex,0,songInfo):(++state.currentIndex);
+    playThis(state, songInfo = {}) {
+      let index = state.currentList.findIndex((song) => song.MUSICRID === songInfo.MUSICRID);
+      if (index !== -1) {
+        state.currentIndex = index;
+      } else if (songInfo.url !== undefined) {
+        state.currentList.splice(state.currentIndex, 0, songInfo);
+      } 
     }
   },
   actions: {
@@ -42,13 +46,13 @@ export default new Vuex.Store({
     updateFavorites(context) {
       db.getTable(context.state, 'favorites');
     },
-    addFavorite(context, songInfo) {
-      context.commit('addFavorite', songInfo);
-      db.add(songInfo, 'favorites');
+    add(context, {songInfo,targetList}) {
+      context.commit('add', {songInfo,targetList});
+      db.add(songInfo, targetList);
     },
-    removeFavorite(context, songInfo) {
-      context.commit('removeFavorite', songInfo);
-      db.remove(songInfo, 'favorites');
+    remove(context, {songInfo,targetList}) {
+      context.commit('remove', {songInfo,targetList});
+      db.remove(songInfo, targetList);
     }
   }
 });
