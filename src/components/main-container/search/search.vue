@@ -8,12 +8,12 @@
           <song-item v-bind:songInfo="songItem" class="show-icon-music show-icon-favorite">
           </song-item>
         </li>
+        <li class="tips">tips</li>
     </ul>
 </div>
 </template>
 <script>
 import songItem from "../../common/songItem/songItem.vue";
-import resp from "./resp.js";
 import store from "../../../store/store.js";
 
 export default {
@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     search: function() {
-      this.songItems=resp.abslist;
       this.axios.get(`/api/search/?queryString=${this.queryString}&page=1&count=15`)
                 .then((response) => {
                   this.songItems=response.data.abslist;
@@ -40,8 +39,12 @@ export default {
 };
 </script>
 <style>
+#search{
+  height: 100%;
+}
 .searchBox {
   background-color: #f4f4f4;
+  text-align: center;
 }
 .search {
   display: inline-block;
@@ -62,6 +65,8 @@ export default {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  height: 100%;
+  overflow: auto;
 }
 .song-container {
   position: relative;
@@ -75,5 +80,10 @@ export default {
   left: 0;
   right: 0;
   background-color: #e5e5e5;
+}
+.tips{
+  text-align: center;
+  min-height: 120px;
+  width: 100%;
 }
 </style>

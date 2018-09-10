@@ -1,5 +1,5 @@
 <template>
-    <div class="main-cntainer">
+    <div class="main-container">
         <div class="nav">
             <div class='tab' v-for="tab in tabs" v-bind:class="{active:tab.id==currentTab}" v-bind:key='tab.id' v-on:click="currentTab=tab.id">{{tab.name}}</div>
         </div>
@@ -38,13 +38,13 @@ export default {
 </script>
 <style>
 .main-container {
+  box-sizing: border-box;
   height: 100%;
-  margin-bottom: 50px;
+  padding-bottom: 40px;
 }
 .nav{
   display: flex;
   justify-content: space-around;
-  /* border-bottom:black 1px solid; */
 }
 .tab{
   flex: 1;
@@ -60,5 +60,4 @@ export default {
   background-color: antiquewhite;
   -webkit-tap-highlight-color: transparent;
 }
-
 </style>
