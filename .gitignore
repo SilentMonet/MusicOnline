@@ -14,3 +14,4 @@ yarn-error.log*
 *.sln
 __pycache__/musicOnline.cpython-35.pyc
 musicOnline.py
+src/components/main-container/search/resp.js
