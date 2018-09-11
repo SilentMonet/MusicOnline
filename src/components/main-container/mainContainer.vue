@@ -4,7 +4,7 @@
             <div 
               class='tab' 
               v-for='tab in tabs'
-              v-bind:class='{active:tab.id==currentTab}'' 
+              v-bind:class='{active:tab.id==currentTab}'
               v-bind:key='tab.id' 
               v-on:click='currentTab=tab.id'
               v-text='tab.name'
