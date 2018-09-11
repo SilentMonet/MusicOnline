@@ -1,7 +1,14 @@
 <template>
     <div class="main-container">
         <div class="nav">
-            <div class='tab' v-for="tab in tabs" v-bind:class="{active:tab.id==currentTab}" v-bind:key='tab.id' v-on:click="currentTab=tab.id">{{tab.name}}</div>
+            <div 
+              class='tab' 
+              v-for='tab in tabs'
+              v-bind:class='{active:tab.id==currentTab}'' 
+              v-bind:key='tab.id' 
+              v-on:click='currentTab=tab.id'
+              v-text='tab.name'
+              ></div>
         </div>
         <keep-alive>
           <component v-bind:is='currentTab'></component>
@@ -41,6 +48,7 @@ export default {
   box-sizing: border-box;
   height: 100%;
   padding-bottom: 40px;
+  -webkit-tap-highlight-color: transparent;
 }
 .nav{
   display: flex;
@@ -57,7 +65,7 @@ export default {
   color: rgba(0,0,0,0.6);
 }
 .tab.active,.tab:hover{
-  background-color: antiquewhite;
-  -webkit-tap-highlight-color: transparent;
+  background-color: #eeeeee;
+  font-weight: bold;
 }
 </style>
