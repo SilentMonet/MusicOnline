@@ -1,36 +1,52 @@
 <template>
 <div id='search'>
-    <div class="searchBox">
-      <input type='text' v-model.trim.lazy="queryString" placeholder="search" v-on:keyup.enter='search' class="search">
+    <div class='searchBox'>
+      <input 
+        type='text' 
+        v-model.trim.lazy='searchArgs.queryString' 
+        placeholder='search' 
+        v-on:keyup.enter='search' 
+        class='search'>
     </div>
-      <ul v-show='songItems!==[]' class="songList">
-        <li v-for="songItem in songItems" v-bind:key="songItem.MUSICRID" class="song-container">
-          <song-item v-bind:songInfo="songItem" class="show-icon-music show-icon-favorite">
-          </song-item>
-        </li>
-        <li class="tips">tips</li>
+    <ul v-show='songItems!==[]' class='songList'>
+        <li 
+          v-for='songItem in songItems' 
+          v-bind:key='songItem.MUSICRID' 
+          class='song-container'>
+            <song-item 
+              v-bind:songInfo='songItem' 
+              class='show-icon-music show-icon-favorite'
+            ></song-item>
+          </li>
+        <li class='tips'></li>
     </ul>
 </div>
 </template>
 <script>
-import songItem from "../../common/songItem/songItem.vue";
-import store from "../../../store/store.js";
+import songItem from '../../common/songItem/songItem.vue';
+import store from '../../../store/store.js';
 
 export default {
   data: function() {
     return {
-      queryString: "",
+      searchArgs: {
+        queryString: '',
+        page: 1,
+        counts: 10
+      },
       songItems: []
     };
   },
   methods: {
     search: function() {
-      this.axios.get(`/api/search/?queryString=${this.queryString}&page=1&count=15`)
-                .then((response) => {
-                  this.songItems=response.data.abslist;
-                }).catch((response) => {
-                  console.log(response);
-                });
+      this.axios
+        .get(`/api/search/`, { params:this.searchArgs })
+        .then(response => {
+          this.songItems = response.data.abslist;
+        })
+        .catch(response => {
+          console.log(response);
+        });
     }
   },
   components: {
@@ -39,7 +55,7 @@ export default {
 };
 </script>
 <style>
-#search{
+#search {
   height: 100%;
 }
 .searchBox {
@@ -73,7 +89,7 @@ export default {
   text-align: left;
 }
 .song-container li::after {
-  content: "";
+  content: '';
   position: absolute;
   height: 1px;
   top: 0;
@@ -81,7 +97,7 @@ export default {
   right: 0;
   background-color: #e5e5e5;
 }
-.tips{
+.tips {
   text-align: center;
   min-height: 120px;
   width: 100%;
