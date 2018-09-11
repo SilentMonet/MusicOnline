@@ -37,6 +37,10 @@ export default {
 <style scoped>
 .songItemContainer{
   position: relative;
+  border-radius: 4px;
+}
+.songItemContainer:active{
+  background-color: rgba(0,0,0,0.1);
 }
 .songItemContainer [class^='icon-']{
   display: none;
