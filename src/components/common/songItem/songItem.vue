@@ -87,6 +87,9 @@ export default {
   font-size: 24px;
   margin:12px 4px 12px;
 }
+.icon-del{
+  color: rgba(0,0,0,0.5);
+}
 .icon-favorite.favorite{
   color: red;
 }
