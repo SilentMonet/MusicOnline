@@ -1,13 +1,14 @@
 <template>
     <div class="player-banner" >
+      
       <i class="icon-music"></i>
       <div class="song">
           <h6 class='songName' v-html="currentPlay.SONGNAME"></h6>
           <p class='artist' v-html="currentPlay.ARTIST"></p>
       </div>
       <i
-        v-bind:class="currentModeClass"
-        v-on:click="currentModeIndex=[currentModeIndex+1]%playModes.length"
+        class="icon-playList"
+        v-on:click="showPlayList=!showPlayList"
       ></i>
       <i
         class="icon-next"
@@ -18,6 +19,11 @@
         v-on:click="isPlaying === true ? pausePlay() : startPlay()"
         ></i>
       
+      <playing-list
+        ref="playList"
+        class="playList"
+        v-show="showPlayList"
+      ></playing-list>
       <audio 
         ref="audio" 
         class="audio" 
@@ -27,6 +33,7 @@
         v-on:timeupdate="currentTime=$refs.audio.currentTime"
         v-on:ended="playNext"
         v-on:canplay="startPlay"
+        v-on:error="errorHandler"
         preload="auto"
         ></audio>
 
@@ -34,15 +41,18 @@
 </template>
 <script>
 import store from "../../store/store";
+import playingList from './playingList/playingList';
+
 export default {
   data: function() {
     return {
       isPlaying: false,
       currentTime: 0,
-        playModes:['loop-list','loop-one','shuffle'],
-        currentModeIndex:0
-      
+      showPlayList:false
     };
+  },
+  components:{
+    playingList
   },
   computed: {
     currentPlay: {
@@ -53,9 +63,6 @@ export default {
         this.pausePlay();
       }
     },
-    currentModeClass: function () {
-      return 'icon-'+this.playModes[this.currentModeIndex]
-    }
   },
   watch: {
     currentPlay: function(newPlay) {
@@ -71,7 +78,6 @@ export default {
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            console.log("start to play");
             
           })
           .catch(error => {
@@ -84,8 +90,9 @@ export default {
       this.$refs.audio.pause();
     },
     playNext() {
-      switch(this.playModes[this.currentModeIndex]){
+      switch(this.$refs.playList.playModes[this.$refs.playList.currentModeIndex]){
         case 'loop-list':
+          store.state.currentIndex=-1;
           store.state.currentIndex = (store.state.currentIndex + 1) % store.state.currentList.length;
           break;
         case 'loop-one':
@@ -103,9 +110,15 @@ export default {
           }
           break;      
       }
-      
+    },
+    errorHandler (error) {
+      console.log('error!!!');
+      console.log(event.target.error.code);
+      console.log(store.getters.currentPlay.SONGNAME);
+      store.dispatch('updateSongUrl',{'songInfo':store.getters.currentPlay,'targetList':'favorites'});
     }
   },
+  
   mounted: function() {
   },
   beforeDestroy: function() {
@@ -117,27 +130,31 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 50;
+  z-index: 100;
   box-sizing: border-box;
   width: 100%;
   height: 50px;
   background: #eeeeee;
 }
-.song,
-.songName,
-.artist {
+.player-banner>*:not(.playList) {
+  background: #eeeeee;
+}
+.player-banner>.song,
+.player-banner .songName,
+.player-banner .artist {
   margin: 0;
   padding: 0;
   
 }
-.song {
+.player-banner>.song {
   display: inline-block;
-  max-width: 250px;
+  max-width: 200px;
+  
   min-height: 50px;
   padding-left: 46px;
   padding-bottom: 4px;
 }
-.songName {
+.player-banner .songName {
   margin: 10px 0 0;
   line-height: 18px;
   font-size: 14px;
@@ -145,55 +162,42 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 250px;
+  max-width: 200px;
 }
-.artist {
+.player-banner .artist {
   color: #808080;
   font-size: 12px;
   line-height: 1.5;
   }
-.icon-music {
+.player-banner .icon-music {
   position: absolute;
   top: 14px;
   left: 10px;
   font-size: 24px;
   color: rgba(0, 0, 0, 0.2);
 }
-.icon-play,
-.icon-pause,
-.icon-loop-list,
-.icon-loop-one,
-.icon-shuffle,
-.icon-next{
+.player-banner .icon-play,
+.player-banner .icon-pause,
+.player-banner .icon-next,
+.player-banner .icon-playList{
   float: right;
   font-size: 24px;
   margin: 12px 4px 12px;
   color: rgba(0, 0, 0, 0.5);
 }
 
-.icon-loop-list,
-.icon-loop-one,
-.icon-shuffle{
-  width: 26px;
-  margin-right: 8px;
-}
-.icon-shuffle{
-  margin-top: 10px;
-}
-.icon-loop-one{
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 14px;
-}
-.icon-loop-list{
-  margin-top: 13px;
-  font-size: 18px;
-  font-weight: bolder;
-}
-.icon-next{
+.player-banner .icon-next{
   
   font-size: 22px;
   margin-left: 0;
   font-weight: bolder;
+}
+.player-banner .playList{
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  max-height: 320px;
+  min-height: 200px;
+  z-index: -50;
 }
 </style>
