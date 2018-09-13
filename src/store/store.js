@@ -3,6 +3,7 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 import db from './localDB';
 
 Vue.use(Vuex);
@@ -39,7 +40,7 @@ export default new Vuex.Store({
         state.currentIndex = index;
       } else if (songInfo.url !== undefined) {
         state.currentList.splice(state.currentIndex, 0, songInfo);
-      } 
+      }
     }
   },
   actions: {
@@ -54,6 +55,18 @@ export default new Vuex.Store({
     remove(context, {songInfo,targetList}) {
       context.commit('remove', {songInfo,targetList});
       db.remove(songInfo, targetList);
+    },
+    updateSongUrl(context,{songInfo,targetList} ){
+      axios.get('/api/getSongUrl',{ params: {'rid':songInfo.MUSICRID} } )
+        .then(response =>{
+          songInfo.url=response.data;
+          db.put(songInfo,targetList);
+          console.log('updated url');
+        })
+        .catch(response => {
+          console.log(response);
+          console.log('url重获取失败');
+        });
     }
   }
 });

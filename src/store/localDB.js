@@ -45,6 +45,9 @@ function add(item, table) {
 function remove(item, table) {
   db.transaction([table], 'readwrite').objectStore(table).delete(item.MUSICRID);
 }
+function put(item,table) {
+  db.transaction([table], 'readwrite').objectStore(table).put(item);
+}
 async function getTable(state, table) {
   if (db === undefined) {
     await waitDB();
@@ -61,5 +64,6 @@ async function getTable(state, table) {
 export default {
   add,
   remove,
+  put,
   getTable
 };
