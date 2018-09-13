@@ -38,31 +38,28 @@ export default {
 .songItemContainer{
   position: relative;
   border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
 }
 .songItemContainer:active{
   background-color: rgba(0,0,0,0.1);
 }
-.songItemContainer [class^='icon-']{
-  display: none;
-}
-.show-icon-music>.icon-music, .show-icon-favorite>.icon-favorite, .show-icon-del>.icon-del, .show-icon-join>.icon-join{
-  display: initial;
-}
-.song,
-.songName,
-.artist {
+
+.songItemContainer .song,
+.songItemContainer .songName,
+.songItemContainer .artist {
   padding: 0;
   margin: 0;
   text-align: left;
 }
-.song {
+.songItemContainer .song {
   display: inline-block;
   min-height: 50px;
-  padding-left: 46px;
+  min-width: 220px;
+  padding-left: 10px;
   padding-bottom: 4px;
   cursor: pointer;
 }
-.songName {
+.songItemContainer .songName {
   margin: 10px 0 2px;
   line-height: 18px;
   font-size: 16px;
@@ -72,26 +69,31 @@ export default {
   text-overflow: ellipsis;
   max-width: 256px;
 }
-.artist {
+.songItemContainer .artist {
   color: #808080;
 }
-.icon-music{
-  position: absolute;
-  top:14px;
-  left: 10px;
+.songItemContainer .icon-music{
+  display: inline-block;
+  width:24px;
+  height: 25px;
+  vertical-align: top;
+  margin-top: 15px;
+  margin-left: 10px;
   font-size: 24px;
   color: rgba(0,0,0,0.2);
 }
-.icon-favorite,.icon-del,.icon-join{
+.songItemContainer .icon-favorite,.songItemContainer .icon-del,.songItemContainer .icon-join{
   float: right;
   font-size: 24px;
   margin:12px 4px 12px;
 }
-.icon-del{
+.songItemContainer .icon-del{
   color: rgba(0,0,0,0.5);
 }
-.icon-favorite.favorite{
+.songItemContainer .icon-favorite.favorite{
   color: red;
 }
-
+.hide-icon-music .icon-music, .hide-icon-favorite .icon-favorite, .hide-icon-del .icon-del, .hide-icon-join .icon-join{
+  display:none;
+}
 </style>
