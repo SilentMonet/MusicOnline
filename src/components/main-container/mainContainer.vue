@@ -18,6 +18,7 @@
 <script>
 import list from "./list/list.vue";
 import search from "./search/search.vue";
+
 export default {
   data: function() {
     return {
@@ -65,7 +66,8 @@ export default {
   color: rgba(0,0,0,0.6);
 }
 .tab.active,.tab:hover{
-  background-color: #eeeeee;
-  font-weight: bold;
+  color: #333;
+  font-weight: bolder;
+  border-bottom: 5px solid #eee;
 }
 </style>
