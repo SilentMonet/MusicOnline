@@ -1,6 +1,11 @@
 <template>
     <div class="lists-container" v-if="favorites!==[]">
-        <song-item v-for="songItem in favorites" v-bind:key='songItem.MUSICRID' v-bind:songInfo="songItem" class="show-icon-music show-icon-del"></song-item>
+        <song-item 
+            v-for="songItem in favorites" 
+            v-bind:key='songItem.MUSICRID' 
+            v-bind:songInfo="songItem" 
+            class="hide-icon-favorite hide-icon-join"
+            ></song-item>
     </div>
 </template>
 <script>
