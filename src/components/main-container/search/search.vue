@@ -6,7 +6,12 @@
         v-model.trim.lazy='searchArgs.queryString' 
         placeholder='search' 
         v-on:keyup.enter='search' 
+        v-on:change='searchArgs.changed=true'
         class='search'>
+        <button
+          class="search-button"
+          v-on:click='search'
+          >搜索</button>
     </div>
     <ul v-show='songItems!==[]' class='songList'>
         <li 
@@ -15,7 +20,7 @@
           class='song-container'>
             <song-item 
               v-bind:songInfo='songItem' 
-              class='show-icon-music show-icon-favorite'
+              class='hide-icon-del hide-icon-join'
             ></song-item>
           </li>
         <li class='tips'></li>
@@ -23,30 +28,35 @@
 </div>
 </template>
 <script>
-import songItem from '../../common/songItem/songItem.vue';
-import store from '../../../store/store.js';
+import songItem from "../../common/songItem/songItem.vue";
+import store from "../../../store/store.js";
 
 export default {
   data: function() {
     return {
       searchArgs: {
-        queryString: '',
-        page: 1,
-        counts: 10
+        queryString: "",
+        page: 0,
+        counts: 10,
+        changed: false
       },
       songItems: []
     };
   },
   methods: {
     search: function() {
-      this.axios
-        .get(`/api/search/`, { params:this.searchArgs })
-        .then(response => {
-          this.songItems = response.data.abslist;
-        })
-        .catch(response => {
-          console.log(response);
-        });
+      if (this.searchArgs.queryString === "") {
+        this.songItems = [];
+      } else if (this.searchArgs.changed||this.songItems===[]) {
+        this.axios
+          .get('/api/search/', { params: this.searchArgs })
+          .then(response => {
+            this.songItems = response.data.abslist;
+          })
+          .catch(response => {
+            alert('搜索失败');
+          });
+      }
     }
   },
   components: {
@@ -73,6 +83,17 @@ export default {
   padding-left: 6px;
   border: none;
 }
+.search-button {
+  font-size: 12px;
+  padding: 1px 8px;
+  border-radius: 8px;
+  color: rgba(0, 0, 0, 0.3);
+  border: none;
+  outline: none;
+}
+.search-button:active {
+  background-color: #bbb;
+}
 .search:focus {
   outline: none;
 }
@@ -89,7 +110,7 @@ export default {
   text-align: left;
 }
 .song-container li::after {
-  content: '';
+  content: "";
   position: absolute;
   height: 1px;
   top: 0;
