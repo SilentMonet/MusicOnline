@@ -37,8 +37,9 @@ export default {
 <style scoped>
 .songItemContainer{
   position: relative;
-  border-radius: 4px;
+  /* border-radius: 1px; */
   -webkit-tap-highlight-color: transparent;
+  border-bottom: 1px solid rgba(4,4,4,0.1);
 }
 .songItemContainer:active{
   background-color: rgba(0,0,0,0.1);
