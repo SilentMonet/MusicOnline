@@ -69,7 +69,7 @@ export default {
   min-height: 30px;
   line-height: 30px;
   font-size: 14px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(9, 9, 9, 0.1);
 }
 .icon-loop-list,
 .icon-loop-one,
