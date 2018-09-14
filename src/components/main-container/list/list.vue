@@ -27,5 +27,9 @@ export default {
 }
 </script>
 <style>
-
+.lists-container{
+    height: 100%;
+    overflow: auto;
+    padding-bottom: 50px;
+}
 </style>
