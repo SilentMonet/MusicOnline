@@ -9,11 +9,11 @@
       <i
         class="icon-playList"
         v-on:click="showPlayList=!showPlayList"
-      ></i>
+        ></i>
       <i
         class="icon-next"
         v-on:click="playNext"
-      ></i>
+        ></i>
       <i 
         v-bind:class="[isPlaying?'icon-pause':'icon-play']" 
         v-on:click="isPlaying === true ? pausePlay() : startPlay()"
@@ -23,7 +23,7 @@
         ref="playList"
         class="playList"
         v-show="showPlayList"
-      ></playing-list>
+        ></playing-list>
       <audio 
         ref="audio" 
         class="audio" 
@@ -90,20 +90,28 @@ export default {
       this.$refs.audio.pause();
     },
     playNext() {
+      console.log('playnext');
+      let index;
       switch(this.$refs.playList.playModes[this.$refs.playList.currentModeIndex]){
         case 'loop-list':
-          store.state.currentIndex=-1;
-          store.state.currentIndex = (store.state.currentIndex + 1) % store.state.currentList.length;
+          index = (store.state.currentIndex + 1) % store.state.currentList.length;
+          if( store.state.currentIndex===index ){
+            this.$refs.audio.currentTime=0;
+            this.startPlay();
+          }
+          else{
+            store.state.currentIndex=index;
+          }
           break;
         case 'loop-one':
           this.$refs.audio.currentTime=0;
           this.startPlay();
           break;
         case 'shuffle':
-          let index=Math.round((store.state.currentList.length-1)*Math.random());
+          index=Math.round((store.state.currentList.length-1)*Math.random());
           if( store.state.currentIndex===index ){
             this.$refs.audio.currentTime=0;
-          this.startPlay();
+            this.startPlay();
           }
           else{
             store.state.currentIndex=index;
@@ -112,16 +120,22 @@ export default {
       }
     },
     errorHandler (error) {
-      console.log('error!!!');
+      let playing=this.currentPlay;
+      console.log('play failed!');
       console.log(event.target.error.code);
-      console.log(store.getters.currentPlay.SONGNAME);
-      store.dispatch('updateSongUrl',{'songInfo':store.getters.currentPlay,'targetList':'favorites'});
+      console.log(playing.SONGNAME);
+      this.axios.get('/api/getSongUrl',{ params: {'rid':playing.MUSICRID} } )
+        .then(response =>{
+          playing.url=response.data;
+          store.dispatch('updateSong',{'songInfo':playing,'targetList':'favorites'});
+          console.log('updated url');
+        })
+        .catch(response => {
+          console.log(response);
+          console.log('url重获取失败');
+        });
+      
     }
-  },
-  
-  mounted: function() {
-  },
-  beforeDestroy: function() {
   }
 };
 </script>
@@ -196,7 +210,7 @@ export default {
   position: absolute;
   bottom: 50px;
   width: 100%;
-  max-height: 320px;
+  max-height: 280px;
   min-height: 200px;
   z-index: -50;
 }
