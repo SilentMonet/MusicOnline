@@ -14,6 +14,7 @@ function waitDB() {
       db = event.target.result;
       if (db.version == 1) {
         createTab('favorites');
+        createTab('currentPlayingList');
       }
     };
     request.onsuccess = function (event) {
@@ -53,11 +54,15 @@ async function getTable(state, table) {
     await waitDB();
   }
 
-  db.transaction([table], 'readonly')
+  let req=db.transaction([table], 'readonly')
     .objectStore(table)
-    .getAll()
-    .onsuccess = function (event) {
+    .getAll();
+
+    req.onsuccess = function (event) {
       state[table] = (event.target.result);
+    };
+    req.onerror=function(event){
+      console.log(event);
     };
 
 }
