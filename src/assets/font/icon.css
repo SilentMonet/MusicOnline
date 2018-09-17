@@ -1,0 +1,113 @@
+	/*
+  	icon icon font: icon
+  	Creation date: 22/06/2016 15:15
+  	*/
+
+@font-face {
+  font-family: "icon";
+  src: url("./icon.eot");
+  src: url("./icon.eot?#iefix") format("embedded-opentype"),
+       url("./icon.woff") format("woff"),
+       url("./icon.ttf") format("truetype"),
+       url("./icon.svg#icon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "icon";
+    src: url("./icon.svg#icon") format("svg");
+  }
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before,
+[class^="icon-"]:after,
+[class*=" icon-"]:after {
+  font-family: icon;
+  font-size: 24px;
+  font-style: normal;
+  vertical-align: top;
+}
+
+.icon-add-song:before { content: "\f100"; }
+.icon-alien-head:before { content: "\f101"; }
+.icon-anonymous-logo:before { content: "\f102"; }
+.icon-apple-ipod:before { content: "\f103"; }
+.icon-cancel-music:before { content: "\f104"; }
+.icon-cassette-tape:before { content: "\f105"; }
+.icon-cd-player:before { content: "\f106"; }
+.icon-clockwise-arrow:before { content: "\f107"; }
+.icon-clockwise-refresh-arrow:before { content: "\f108"; }
+.icon-conversation-speech-balloon:before { content: "\f109"; }
+.icon-dislike-thumb:before { content: "\f10a"; }
+.icon-download-music:before { content: "\f10b"; }
+.icon-downloading-down-arrow:before { content: "\f10c"; }
+.icon-edit-draw-pencil:before { content: "\f10d"; }
+.icon-electric-keyboard:before { content: "\f10e"; }
+.icon-fast-forward-arrow:before { content: "\f10f"; }
+.icon-favorite-mark:before { content: "\f110"; }
+.icon-heavy-metal-concert:before { content: "\f111"; }
+.icon-identity-card:before { content: "\f112"; }
+.icon-jazz-saxophone:before { content: "\f113"; }
+.icon-keybord-keys:before { content: "\f114"; }
+.icon-last-track-left-arrow:before { content: "\f115"; }
+.icon-levels-adjusment:before { content: "\f116"; }
+.icon-lines-menu:before { content: "\f117"; }
+.icon-love-songs:before { content: "\f118"; }
+.icon-loving-heart-shape:before { content: "\f119"; }
+.icon-metronome:before { content: "\f11a"; }
+.icon-music-attachment:before { content: "\f11b"; }
+.icon-music-cube:before { content: "\f11c"; }
+.icon-music-earphones:before { content: "\f11d"; }
+.icon-music-file:before { content: "\f11e"; }
+.icon-music-folder:before { content: "\f11f"; }
+.icon-music-headphones:before { content: "\f120"; }
+.icon-music-linked:before { content: "\f121"; }
+.icon-music-note-quaver:before { content: "\f122"; }
+.icon-music-player-pause-lines:before { content: "\f123"; }
+.icon-music-player-play:before { content: "\f124"; }
+.icon-music-player-sign:before { content: "\f125"; }
+.icon-music-player-sound-waves:before { content: "\f126"; }
+.icon-music-player-speaker:before { content: "\f127"; }
+.icon-music-player-speaker-1:before { content: "\f128"; }
+.icon-music-playlist:before { content: "\f129"; }
+.icon-music-social-group:before { content: "\f12a"; }
+.icon-music-sound-bars:before { content: "\f12b"; }
+.icon-music-targert:before { content: "\f12c"; }
+.icon-music-user-avatar:before { content: "\f12d"; }
+.icon-music-volume:before { content: "\f12e"; }
+.icon-music-searcher:before { content: "\f12f"; }
+.icon-musical-quaver:before { content: "\f130"; }
+.icon-mute-volume-adjustment:before { content: "\f131"; }
+.icon-options-list:before { content: "\f132"; }
+.icon-percussion-drum:before { content: "\f133"; }
+.icon-plug:before { content: "\f134"; }
+.icon-profile-avatar-user:before { content: "\f135"; }
+.icon-rec-button:before { content: "\f136"; }
+.icon-reproduction-music-stats:before { content: "\f137"; }
+.icon-retro-music-player:before { content: "\f138"; }
+.icon-rewind-arrow:before { content: "\f139"; }
+.icon-saltar-a-pista-anterior:before { content: "\f13a"; }
+.icon-save-file-diskette:before { content: "\f13b"; }
+.icon-school-pin-pointing-down:before { content: "\f13c"; }
+.icon-settings-work-tool:before { content: "\f13d"; }
+.icon-share-music:before { content: "\f13e"; }
+.icon-skip-track:before { content: "\f13f"; }
+.icon-next:before { content: "\f140"; }
+.icon-songs-list:before { content: "\f141"; }
+.icon-sound-adjustment:before { content: "\f142"; }
+.icon-spanish-guitar:before { content: "\f143"; }
+.icon-spanish-guitar-and-keyboard:before { content: "\f144"; }
+.icon-shuffle:before { content: "\f145"; }
+.icon-three-circles:before { content: "\f146"; }
+.icon-thumbs-up:before { content: "\f147"; }
+.icon-upload-arrow:before { content: "\f148"; }
+.icon-video-player-stop-button:before { content: "\f149"; }
+.icon-vinyl-music-player:before { content: "\f14a"; }
+.icon-voice-recorder:before { content: "\f14b"; }
+.icon-volume-adjustment-mute:before { content: "\f14c"; }
+.icon-volume-control:before { content: "\f14d"; }
+.icon-waste-bin:before { content: "\f14e"; }
+.icon-wifi-signal-internet:before { content: "\f14f"; }
