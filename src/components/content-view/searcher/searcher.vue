@@ -65,6 +65,11 @@ export default {
           })
           .then(response => {
             this.queryString = response.data.queryString;
+            for(let song of response.data.abslist){
+              song.isFavorite=!store.state.lists.favorites.every( (s) => {
+                return s.MUSICRID !== song.MUSICRID
+              });
+            }
             this.resultItems = response.data.abslist;
           })
           .catch(response => {
