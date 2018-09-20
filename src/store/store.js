@@ -54,8 +54,6 @@ export default new Vuex.Store({
       songInfo = {}
     }) {
       let index = state.playingStatus.currentPlayingList.findIndex((song) => song.MUSICRID === songInfo.MUSICRID);
-      console.log(songInfo.SONGNAME);
-      console.log(state.playingStatus.currentPlayingList);
       if (index !== -1) {
         state.playingStatus.currentPlayingIndex = -1; //不可删除本行，否则在列表中点击当前正在播放的曲目时无法引起动态响应
         state.playingStatus.currentPlayingIndex = index;
