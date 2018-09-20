@@ -14,10 +14,11 @@
        v-on:click="playNext"></i>
     <i v-bind:class="[isPlaying?'icon-music-player-pause-lines':'icon-music-player-play']"
        v-on:click="isPlaying === true ? pausePlay() : startPlay()"></i>
-
+    <transition name="playList-pop">
     <playing-list ref="playList"
                   class="playList"
                   v-show="showPlayList"></playing-list>
+    </transition>
     <audio ref="audio"
            class="audio"
            v-bind:src="currentPlay.url"
@@ -78,24 +79,24 @@ export default {
       switch (this.$refs.playList.currentModeIndex) {
         case 0:
           index =
-            (store.state.playingStatus.currentIndex + 1) % store.state.playingStatus.currentList.length;
-          if (store.state.playingStatus.currentIndex === index) {
+            (store.state.playingStatus.currentPlayingIndex + 1) % store.state.playingStatus.currentPlayingList.length;
+          if (store.state.playingStatus.currentPlayingIndex === index) {
             this.startPlay();
           } else {
-            store.state.playingStatus.currentIndex = index;
+            store.state.playingStatus.currentPlayingIndex = index;
           }
           break;
         case 1:
-          this.startPlay();
+          this.$refs.audio.currentTime=0;
           break;
         case 2:
           index = Math.round(
-            (store.state.playingStatus.currentList.length - 1) * Math.random()
+            (store.state.playingStatus.currentPlayingList.length - 1) * Math.random()
           );
-          if (store.state.playingStatus.currentIndex === index) {
+          if (store.state.playingStatus.currentPlayingIndex === index) {
             this.startPlay();
           } else {
-            store.state.playingStatus.currentIndex = index;
+            store.state.playingStatus.currentPlayingIndex = index;
           }
           break;
       }
@@ -132,7 +133,8 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: rgba(0, 0, 0, 0.2);
+  z-index: 50;
+  background: #bbb;
   .song {
     display: inline-block;
     height: 36px;
@@ -154,71 +156,22 @@ export default {
       float: right;
     }
   }
+  .playList-pop-enter-to,.playList-pop-leave{
+    max-height: 280px;
+  }
+  .playList-pop-enter,.playList-pop-leave-to{
+    max-height: 0;
+    min-height: 0;
+  }
+  .playList-pop-enter-active{
+    transition: all 1s;
+    overflow: hidden;
+    z-index: -10;
+  }
   .playList {
     position: absolute;
     bottom: 50px;
     width: 100%;
   }
 }
-/* .player-banner>.song,
-.player-banner .songName,
-.player-banner .artist {
-  margin: 0;
-  padding: 0;
-
-}
-.player-banner>.song {
-  display: inline-block;
-  max-width: 200px;
-
-  min-height: 50px;
-  padding-left: 46px;
-  padding-bottom: 4px;
-}
-.player-banner .songName {
-  margin: 10px 0 0;
-  line-height: 18px;
-  font-size: 14px;
-  font-weight: bold;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
-.player-banner .artist {
-  color: #808080;
-  font-size: 12px;
-  line-height: 1.5;
-  }
-.player-banner .icon-music {
-  position: absolute;
-  top: 14px;
-  left: 10px;
-  font-size: 24px;
-  color: rgba(0, 0, 0, 0.2);
-}
-.player-banner .icon-play,
-.player-banner .icon-pause,
-.player-banner .icon-next,
-.player-banner .icon-playList{
-  float: right;
-  font-size: 24px;
-  margin: 12px 4px 12px;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.player-banner .icon-next{
-
-  font-size: 22px;
-  margin-left: 0;
-  font-weight: bolder;
-}
-.player-banner .playList{
-  position: absolute;
-  bottom: 50px;
-  width: 100%;
-  max-height: 280px;
-  min-height: 200px;
-  z-index: -50;
-} */
 </style>

@@ -9,7 +9,7 @@
       <button class="searchButton"
               v-on:click='search'>搜索</button>
     </div>
-    <ul v-show='resultItems!==[]'
+    <transition-group name="resultList" tag="ul" v-show='resultItems!==[]'
         class='songList'>
       <li v-for='songItem in resultItems'
           v-bind:key='songItem.MUSICRID'
@@ -20,7 +20,7 @@
            v-on:click.stop="toggleFavor(songItem)"></i>
         <song-item v-bind:songInfo='songItem'></song-item>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 <script>
@@ -32,7 +32,7 @@ export default {
     return {
       searchArgs: {
         page: 0,
-        counts: 15
+        counts: 10
       }
     };
   },
@@ -58,10 +58,7 @@ export default {
     search: function() {
       if (this.queryString === "") {
         this.resultItems = [];
-      } else if (
-        // !resultItems为vue变异数组，不能使用resultItems===[]进行判断
-        this.resultItems.length === 0
-      ) {
+      } else {
         this.axios
           .get("/api/search/", {
             params: { ...this.searchArgs, queryString: this.queryString }
@@ -140,6 +137,17 @@ export default {
         }
       }
     }
+  }
+  .resultList-enter-to,.resultList-leave{
+    max-height: 60px;
+  }
+  .resultList-enter-active {
+    transition: all 1s;
+    overflow: hidden;
+  }
+  .resultList-enter,
+  .resultList-leave-to {
+    max-height: 0;
   }
 }
 </style>

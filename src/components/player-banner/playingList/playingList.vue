@@ -7,7 +7,9 @@
          v-text="playModesText[currentModeIndex]"></i>
 
     </div>
-    <ul class="list">
+    <transition-group name="list"
+                      class="playItems"
+                      tag="ul">
       <li class="item"
           v-for="songItem in playList"
           v-bind:key="songItem.MUSICRID"
@@ -17,7 +19,7 @@
         <song-item v-bind:songInfo="songItem"></song-item>
 
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -47,10 +49,13 @@ export default {
   },
   methods: {
     remove(song) {
-      store.commit("remove", { songInfo: song, targetList: "currentPlayingList" });
+      store.commit("remove", {
+        songInfo: song,
+        targetList: "currentPlayingList"
+      });
     },
-    playThis(songItem){
-      store.commit('playThis',{'songInfo':songItem});
+    playThis(songItem) {
+      store.commit("playThis", { songInfo: songItem });
     }
   }
 };
@@ -65,8 +70,8 @@ export default {
   overflow: auto;
   .toolBar {
     position: sticky;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     line-height: 28px;
     background-color: #bbb;
     #changeMode {
@@ -78,7 +83,8 @@ export default {
       font-weight: 600;
     }
   }
-  .list {
+  .playItems {
+    transition: height 1s 1s;
     .icon-cancel-music {
       float: right;
       padding: 12px 12px;
@@ -93,6 +99,22 @@ export default {
         display: none;
       }
     }
+  }
+  .list-move {
+    transition: all 1s ease;
+  }
+  .list-enter-active {
+    transition: all 1s;
+  }
+  .list-leave-active {
+    position: absolute;
+    width: 100%;
+    transition: all 1s;
+  }
+  .list-enter,
+  .list-leave-to {
+    transform: translateX(30px);
+    opacity: 0;
   }
 }
 </style>
